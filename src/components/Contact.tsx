@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Trash2, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { ContactSubmission } from "../types";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [name, setName]       = useState("");
@@ -29,16 +30,23 @@ export default function Contact() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const sub: ContactSubmission = {
-      id: "msg-" + Date.now(), name, email, service, message,
-      timestamp: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" }),
-    };
-    const updated = [sub, ...submissions];
-    setSubmissions(updated);
-    localStorage.setItem("portfolio_submissions", JSON.stringify(updated));
-    setName(""); setEmail(""); setService("Collaboration"); setMessage("");
-    setIsSuccess(true);
-    setTimeout(() => setIsSuccess(false), 5000);
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      service: service,
+      message: message,
+    }; 
+    
+    emailjs
+    .send("service_sa37bt5", "emplate_we2urjg", templateParams, "K13XXYHK7C9sMXvKm")
+    .then(() => {
+      setName(""); setEmail(""); setService("Collaboration"); setMessage("");
+      setIsSuccess(true);
+      setTimeout(() => setIsSuccess(false), 5000);
+    })
+    .catch(() => alert("Failed to send. Please email me directly."));
+    
   };
 
   const deleteMsg = (id: string) => {
