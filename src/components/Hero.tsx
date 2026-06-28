@@ -4,6 +4,14 @@ import { motion } from "motion/react";
 
 interface HeroProps { theme: "dark" | "light"; }
 
+// Defined outside component — not recreated on every render
+const ROLES = [
+  "Full-Stack Developer",
+  "AI/ML Enthusiast",
+  "CS Undergrad @ NSUT",
+  "Algo Visualizer Builder",
+];
+
 export default function Hero({ theme }: HeroProps) {
   const [typedText, setTypedText] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
@@ -11,12 +19,7 @@ export default function Hero({ theme }: HeroProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const roles = [
-    "Full-Stack Developer",
-    "AI/ML Enthusiast",
-    "CS Undergrad @ NSUT",
-    "Algo Visualizer Builder",
-  ];
+  const roles = ROLES;
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
@@ -86,7 +89,20 @@ export default function Hero({ theme }: HeroProps) {
       animId = requestAnimationFrame(draw);
     };
     draw();
-    return () => { window.removeEventListener("resize", onResize); window.removeEventListener("mousemove", onMouseMove); cancelAnimationFrame(animId); };
+
+    // Pause animation when tab is hidden to save CPU
+    const onVisibility = () => {
+      if (document.hidden) cancelAnimationFrame(animId);
+      else { animId = requestAnimationFrame(draw); }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      cancelAnimationFrame(animId);
+    };
   }, [theme]);
 
   return (

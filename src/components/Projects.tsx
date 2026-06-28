@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowUpRight, ExternalLink, Github, BookOpen,
   Target, Shield, Check, X, Sparkles, Terminal,
@@ -10,7 +10,7 @@ interface ProjectsProps { theme: "dark" | "light"; }
 
 // ── Gradient fallbacks (shown when no screenshot file exists) ──────────────
 const FALLBACK_GRADIENTS: Record<string, string> = {
-  "UpStream":         "linear-gradient(135deg, #0d1117 0%, #1a3a6e 50%, #0d1117 100%)",
+  "upstream":      "linear-gradient(135deg, #0d1117 0%, #1a3a6e 50%, #0d1117 100%)",
   "urban-heat":    "linear-gradient(135deg, #003d1f 0%, #00994d 50%, #004d28 100%)",
   "cryptex":       "linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #0a1628 100%)",
   "automata-lab":  "linear-gradient(135deg, #1a0a2e 0%, #4a1f8c 50%, #2d0f5e 100%)",
@@ -39,7 +39,7 @@ function ProjectImage({
   if (failed) {
     return (
       <div
-        className="w-full h-full flex flex-col items-center justify-center p-8 relative overflow-hidden"
+        className="absolute inset-0 flex flex-col items-center justify-center p-8 overflow-hidden"
         style={{
           background:
             FALLBACK_GRADIENTS[project.id] ??
