@@ -76,6 +76,26 @@ export default function About() {
                 <div className="text-center md:text-left"><Counter target={157} suffix="+" /><div className="t-txt40 text-[10px] font-mono uppercase tracking-widest mt-1.5">DSA Problems</div></div>
                 <div className="text-center md:text-left"><Counter target={22} suffix="+" /><div className="t-txt40 text-[10px] font-mono uppercase tracking-widest mt-1.5">GitHub Repos</div></div>
               </div>
+
+              {/* Certifications */}
+              <div className="mt-10 pt-8 border-t t-bdr">
+                <span className="text-xs font-mono uppercase tracking-widest text-primary mb-5 block">// CERTIFICATIONS</span>
+                <div className="space-y-3">
+                  {[
+                    { title: "Designing Blockchain Solutions — Amazon Managed Blockchain", org: "AWS", year: "Nov 2025" },
+                    { title: "Fundamentals of Machine Learning & Artificial Intelligence",  org: "AWS", year: "Nov 2025" },
+                    { title: "Soft Skills and Personality Development",                     org: "NPTEL Swayam", year: "Aug–Nov 2025" },
+                  ].map((c) => (
+                    <div key={c.title} className="flex items-start gap-3 p-3 rounded-lg t-surface border t-bdr5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                      <div>
+                        <p className="text-xs font-bold t-txt80 leading-snug">{c.title}</p>
+                        <p className="text-[10px] font-mono t-txt40 uppercase tracking-wider mt-0.5">{c.org} · {c.year}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
 

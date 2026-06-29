@@ -91,11 +91,13 @@ CERTIFICATIONS
               {copied ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? "Copied!" : "Copy Text"}
             </button>
-            <button onClick={() => window.print()}
+            <a
+              href="/resume.pdf"
+              download
               className="px-4 py-2 t-card border t-bdr2 t-txt rounded-full text-[10px] font-mono uppercase tracking-widest t-btn-inv transition-colors cursor-pointer flex items-center gap-1.5"
             >
-              <Printer className="w-3.5 h-3.5" />PDF
-            </button>
+              <Printer className="w-3.5 h-3.5" />Download PDF
+            </a>
             <div className="w-px h-6 t-surface mx-1" />
             <button onClick={onClose} className="p-2 hover:bg-primary/10 rounded-full t-txt60 hover:text-primary transition-all cursor-pointer">
               <X className="w-5 h-5" />
@@ -209,9 +211,13 @@ CERTIFICATIONS
           <button onClick={onClose} className="px-6 py-2 border t-bdr2 t-txt rounded-full text-xs uppercase tracking-widest font-bold cursor-pointer t-btn-inv transition-all duration-200">
             Close
           </button>
-          <button onClick={() => window.print()} className="px-6 py-2 bg-primary text-on-primary rounded-full text-xs uppercase tracking-widest font-bold flex items-center gap-1.5 cursor-pointer t-btn-inv transition-all duration-200">
-            <Printer className="w-4 h-4" />Print / Save PDF
-          </button>
+          <a
+            href="/resume.pdf"
+            download
+            className="px-6 py-2 bg-primary text-on-primary rounded-full text-xs uppercase tracking-widest font-bold flex items-center gap-1.5 cursor-pointer t-btn-inv transition-all duration-200"
+          >
+            <Printer className="w-4 h-4" />Download PDF
+          </a>
         </div>
       </motion.div>
     </motion.div>

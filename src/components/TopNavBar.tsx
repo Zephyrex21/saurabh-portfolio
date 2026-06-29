@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, FileText, Sun, Moon } from "lucide-react";
+import { Menu, X, FileText, Sun, Moon, Download } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface TopNavBarProps {
@@ -98,6 +98,15 @@ export default function TopNavBar({ onOpenResume, theme, toggleTheme }: TopNavBa
             </button>
 
             <a
+              href="/resume.pdf"
+              download
+              className="w-9 h-9 border t-bdr rounded-full flex items-center justify-center t-txt60 hover:text-primary hover:border-primary transition-all duration-200 cursor-pointer"
+              title="Download Resume PDF"
+            >
+              <Download className="w-4 h-4" />
+            </a>
+
+            <a
               href="#contact"
               className="px-5 py-2 bg-primary text-on-primary rounded-full text-xs uppercase tracking-widest font-bold cursor-pointer t-btn-inv transition-all duration-250"
             >
@@ -156,13 +165,24 @@ export default function TopNavBar({ onOpenResume, theme, toggleTheme }: TopNavBa
                 </a>
               ))}
               <div className="pt-4 border-t t-bdr flex flex-col gap-3">
-                <button
-                  onClick={() => { closeMobile(); onOpenResume(); }}
-                  className="w-full py-3 border t-bdr2 t-txt rounded-full text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 cursor-pointer t-btn-inv transition-all duration-200"
-                >
-                  <FileText className="w-4 h-4" />
-                  Resume
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { closeMobile(); onOpenResume(); }}
+                    className="flex-1 py-3 border t-bdr2 t-txt rounded-full text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 cursor-pointer t-btn-inv transition-all duration-200"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Resume
+                  </button>
+                  <a
+                    href="/resume.pdf"
+                    download
+                    onClick={closeMobile}
+                    className="py-3 px-4 border t-bdr t-txt60 hover:text-primary hover:border-primary rounded-full flex items-center justify-center cursor-pointer transition-all duration-200"
+                    title="Download PDF"
+                  >
+                    <Download className="w-4 h-4" />
+                  </a>
+                </div>
                 <a
                   href="#contact"
                   onClick={closeMobile}

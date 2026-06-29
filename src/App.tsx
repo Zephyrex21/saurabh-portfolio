@@ -10,6 +10,7 @@ import TechMarquee from "./components/TechMarquee";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ResumeModal from "./components/ResumeModal";
+import Preloader from "./components/Preloader";
 
 export default function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
@@ -48,6 +49,7 @@ export default function App() {
 
   return (
     <div data-theme={theme} className="relative min-h-screen t-bg t-txt antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary">
+      <Preloader />
       <div className="cursor-glow hidden md:block" style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }} />
 
       <TopNavBar onOpenResume={() => setIsResumeOpen(true)} theme={theme} toggleTheme={toggleTheme} />

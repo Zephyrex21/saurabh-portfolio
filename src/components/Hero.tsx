@@ -120,10 +120,16 @@ export default function Hero({ theme }: HeroProps) {
         {/* Left */}
         <div className="lg:col-span-8 text-left">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-6">
-            <span className="inline-flex items-center gap-2 px-3 py-1 t-surface border t-bdr text-primary font-mono text-xs font-semibold tracking-widest rounded-full uppercase">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
-              CSE Student &amp; Full-Stack Developer
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-2 px-3 py-1 t-surface border t-bdr text-primary font-mono text-xs font-semibold tracking-widest rounded-full uppercase">
+                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
+                CSE Student &amp; Full-Stack Developer
+              </span>
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 text-primary font-mono text-xs font-semibold tracking-widest rounded-full uppercase">
+                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                Open to Internships · 2026
+              </span>
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="mb-6">

@@ -94,7 +94,24 @@ function ProjectImage({
 
 // ── Main component ─────────────────────────────────────────────────────────
 export default function Projects({ theme }: ProjectsProps) {
-  const [filter, setFilter] = useState<string>("All");
+  const [filter, setFilter] = useState<string>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const f = params.get("filter");
+    // Only accept valid category values — prevents URL injection
+    const valid = ["All", "Full-Stack App", "AI/ML Project", "Algorithm Visualizer"];
+    return f && valid.includes(f) ? f : "All";
+  });
+
+  const handleFilterChange = (cat: string) => {
+    setFilter(cat);
+    const params = new URLSearchParams(window.location.search);
+    if (cat === "All") params.delete("filter");
+    else params.set("filter", cat);
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params}`
+      : window.location.pathname;
+    window.history.replaceState({}, "", newUrl);
+  };
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
 
   const projects: Project[] = [
@@ -307,7 +324,7 @@ function nfaToDfa(nfa) {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setFilter(cat)}
+                onClick={() => handleFilterChange(cat)}
                 className={`px-4 py-2 rounded text-[10px] font-mono uppercase tracking-widest transition-all duration-200 cursor-pointer ${
                   filter === cat
                     ? "bg-primary text-on-primary shadow-lg font-bold"
@@ -411,6 +428,42 @@ function nfaToDfa(nfa) {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* ── More Projects Mini Grid ── */}
+        <div className="mt-24 pt-16 border-t t-bdr5">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2 block">// MORE_PROJECTS</span>
+              <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tight t-txt">Also Built</h3>
+            </div>
+            <a href="https://github.com/Zephyrex21" target="_blank" rel="noopener noreferrer"
+              className="text-[10px] font-mono uppercase tracking-widest text-primary hover:underline flex items-center gap-1.5"
+            >
+              View All on GitHub <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { name: "Red Blackify",          stack: "React · Tailwind",    url: "https://rbt-visualizer.netlify.app/",         desc: "Interactive RBT & AVL Tree visualizer with animations, pseudocode & step-by-step operations." },
+              { name: "CFG Studio",            stack: "React · Tailwind",    url: "https://cfgstudio.netlify.app/",              desc: "Context-Free Grammar tool — design grammars, visualize derivations & generate parse trees." },
+              { name: "Task Scheduler",        stack: "React · Tailwind",    url: "https://processvisualizer.netlify.app/",      desc: "Real-time OS scheduling visualizer supporting FCFS & other algorithms with Gantt chart." },
+              { name: "B-Tree Visualizer Pro", stack: "React · JavaScript",  url: "https://btreevisualizer.netlify.app/",        desc: "Interactive B-Tree with animated insert/delete, pseudocode display & operation details." },
+              { name: "CSP Playground",        stack: "React · JavaScript",  url: "https://csp-playground.netlify.app/",         desc: "Backtracking visualizer for Sudoku, N-Queens, Graph Coloring & Timetable Scheduling." },
+              { name: "Auth App Demo",         stack: "Node.js · MongoDB",   url: "https://github.com/Zephyrex21",               desc: "JWT authentication learning project built with Node.js, Express, MongoDB & bcryptjs." },
+            ].map((p) => (
+              <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                className="group p-5 rounded-xl border t-bdr t-card hover:border-primary transition-all duration-200 flex flex-col gap-3"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-display font-black uppercase tracking-tight t-txt text-sm group-hover:text-primary transition-colors leading-tight">{p.name}</h4>
+                  <ExternalLink className="w-3.5 h-3.5 t-txt40 group-hover:text-primary shrink-0 mt-0.5 transition-colors" />
+                </div>
+                <p className="text-xs t-txt60 font-light leading-relaxed flex-1">{p.desc}</p>
+                <span className="text-[10px] font-mono t-txt40 uppercase tracking-wider">{p.stack}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
