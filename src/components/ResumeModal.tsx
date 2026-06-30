@@ -13,7 +13,7 @@ New Delhi, India | LeetCode: leetcode.com/u/Zephyrex_21
 SUMMARY
 2nd year B.Tech CSE (Data Science) student at NSUT Delhi (2028). Full-stack developer
 building end-to-end web apps, algorithm visualizers, and AI/ML tools with Python and React.
-157+ DSA problems solved across LeetCode (62) and Code360 (95). 8+ deployed projects.
+157+ DSA problems solved across LeetCode (62) and Code360 (95). 12+ deployed projects.
 
 EDUCATION
 B.Tech CSE (Data Science) — NSUT Delhi | 2024–2028
@@ -59,7 +59,15 @@ CERTIFICATIONS
 - Fundamentals of Machine Learning and Artificial Intelligence, AWS (Nov 2025)
 - Soft Skills and Personality Development, NPTEL Swayam (Aug–Nov 2025)`;
 
-  const handleCopy = () => { navigator.clipboard.writeText(plainText); setCopied(true); setTimeout(() => setCopied(false), 2000); };
+  const handleCopy = () => {
+    try {
+      navigator.clipboard.writeText(plainText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      alert("Couldn't copy automatically — please select and copy the text manually.");
+    }
+  };
 
   const projects = [
     { name: "Forge — GitHub Contribution Radar", stack: "React 18 · Vite · Node.js · Express · MongoDB · GitHub OAuth · JWT · TanStack Query · Recharts", desc: "Full-stack MERN platform that scores GitHub issues (0–100) by skill match and tracks them through a contribution pipeline.", url: "github-contribution-radar.vercel.app" },
@@ -124,7 +132,7 @@ CERTIFICATIONS
           <div className="space-y-3">
             <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// ABOUT</h4>
             <p className="text-sm t-txt60 leading-relaxed font-light">
-              2nd year B.Tech CSE (Data Science) at NSUT Delhi (Class of 2028). Full-stack developer building end-to-end apps — from Node/Express REST APIs and Python/FastAPI ML backends to interactive React frontends. 157+ DSA problems solved, 19+ GitHub repositories, 8+ deployed projects.
+              2nd year B.Tech CSE (Data Science) at NSUT Delhi (Class of 2028). Full-stack developer building end-to-end apps — from Node/Express REST APIs and Python/FastAPI ML backends to interactive React frontends. 157+ DSA problems solved, 22+ GitHub repositories, 12+ deployed projects.
             </p>
           </div>
 

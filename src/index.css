@@ -110,10 +110,14 @@ section[id] { scroll-margin-top: 80px; }
   height: 450px;
   background: radial-gradient(circle, rgba(0, 200, 80, 0.04) 0%, transparent 70%);
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10;
-  transform: translate(-50%, -50%);
-  transition: left 0.05s, top 0.05s;
+  /* Position is driven entirely via transform (set in JS) — GPU-composited,
+     no layout reflow on every mouse move, unlike animating left/top. */
+  transform: translate(-100px, -100px) translate(-50%, -50%);
+  will-change: transform;
 }
 
 /* ─── TYPING CURSOR ─────────────────────────────────────── */

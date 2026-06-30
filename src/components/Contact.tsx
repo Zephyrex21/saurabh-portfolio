@@ -12,6 +12,7 @@ export default function Contact() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors]   = useState<Record<string, string>>({});
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     try { const s = localStorage.getItem("portfolio_submissions"); if (s) setSubmissions(JSON.parse(s)); } catch {}
@@ -29,7 +30,8 @@ export default function Contact() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validate() || isSending) return;
+    setIsSending(true);
 
     const templateParams = {
       from_name: name,
@@ -51,19 +53,20 @@ export default function Contact() {
       };
       const updated = [newSub, ...submissions];
       setSubmissions(updated);
-      localStorage.setItem("portfolio_submissions", JSON.stringify(updated));
+      try { localStorage.setItem("portfolio_submissions", JSON.stringify(updated)); } catch {}
       setName(""); setEmail(""); setService("Collaboration"); setMessage("");
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 5000);
     })
-    .catch(() => alert("Failed to send. Please email me directly at shekharsaurabhraj@gmail.com"));
+    .catch(() => alert("Failed to send. Please email me directly at shekharsaurabhraj@gmail.com"))
+    .finally(() => setIsSending(false));
     
   };
 
   const deleteMsg = (id: string) => {
     const updated = submissions.filter((s) => s.id !== id);
     setSubmissions(updated);
-    localStorage.setItem("portfolio_submissions", JSON.stringify(updated));
+    try { localStorage.setItem("portfolio_submissions", JSON.stringify(updated)); } catch {}
   };
 
   const inputClass = (field: string) =>
@@ -162,9 +165,13 @@ export default function Contact() {
                   {errors.message && <span className="text-xs font-mono text-rose-500">{errors.message}</span>}
                 </div>
 
-                <button type="submit" className="w-full py-4 bg-primary text-on-primary rounded-full font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer t-btn-inv transition-all duration-200">
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full py-4 bg-primary text-on-primary rounded-full font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer t-btn-inv transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
                   <Send className="w-4 h-4" />
-                  Send Message
+                  {isSending ? "Sending..." : "Send Message"}
                 </button>
               </form>
             </div>

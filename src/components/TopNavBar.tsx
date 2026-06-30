@@ -14,7 +14,9 @@ export default function TopNavBar({ onOpenResume, theme, toggleTheme }: TopNavBa
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId: number | null = null;
+
+    const updateScrollState = () => {
       setScrolled(window.scrollY > 20);
       const sections = ["home", "about", "skills", "projects", "contact"];
       const current = sections.find((section) => {
@@ -26,9 +28,19 @@ export default function TopNavBar({ onOpenResume, theme, toggleTheme }: TopNavBa
         return false;
       });
       if (current) setActiveSection(current);
+      rafId = null;
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const handleScroll = () => {
+      // Coalesce rapid scroll events into one layout read per frame
+      if (rafId === null) rafId = requestAnimationFrame(updateScrollState);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const navLinks = [

@@ -11,10 +11,10 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ResumeModal from "./components/ResumeModal";
 import Preloader from "./components/Preloader";
+import CursorGlow from "./components/CursorGlow";
 
 export default function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     return (localStorage.getItem("portfolio-theme") as "dark" | "light") || "dark";
   });
@@ -32,25 +32,10 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  useEffect(() => {
-    let rafId: number;
-    const handleMouseMove = (e: MouseEvent) => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() =>
-        setMousePos({ x: e.clientX, y: e.clientY })
-      );
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   return (
     <div data-theme={theme} className="relative min-h-screen t-bg t-txt antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary">
       <Preloader />
-      <div className="cursor-glow hidden md:block" style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }} />
+      <CursorGlow />
 
       <TopNavBar onOpenResume={() => setIsResumeOpen(true)} theme={theme} toggleTheme={toggleTheme} />
 
