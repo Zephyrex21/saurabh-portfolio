@@ -7,9 +7,35 @@ export default function Preloader() {
   useEffect(() => {
     // Respect users who prefer reduced motion — skip preloader instantly
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const delay = prefersReduced ? 0 : 1800;
-    const t = setTimeout(() => setVisible(false), delay);
-    return () => clearTimeout(t);
+    if (prefersReduced) {
+      setVisible(false);
+      return;
+    }
+
+    const MIN_VISIBLE = 500;   // avoid an instant flash on fast connections
+    const MAX_VISIBLE = 2200;  // never block longer than this even on slow connections
+    const start = performance.now();
+
+    const finish = () => {
+      const elapsed = performance.now() - start;
+      const remaining = Math.max(MIN_VISIBLE - elapsed, 0);
+      setTimeout(() => setVisible(false), remaining);
+    };
+
+    // Resolve as soon as the page is actually ready, not on a fixed timer —
+    // this makes fast connections feel fast instead of always waiting ~1.8s.
+    if (document.readyState === "complete") {
+      finish();
+    } else {
+      window.addEventListener("load", finish, { once: true });
+    }
+
+    const maxTimer = setTimeout(() => setVisible(false), MAX_VISIBLE);
+
+    return () => {
+      window.removeEventListener("load", finish);
+      clearTimeout(maxTimer);
+    };
   }, []);
 
   return (
@@ -35,7 +61,7 @@ export default function Preloader() {
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: "0%" }}
-              transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
+              transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1], delay: 0.05 }}
               className="h-full w-full bg-primary rounded-full"
             />
           </div>

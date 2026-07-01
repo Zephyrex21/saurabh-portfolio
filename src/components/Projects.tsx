@@ -26,14 +26,14 @@ function ProjectImage({
   project: Project;
   theme: "dark" | "light";
 }) {
-  const src = `/screenshots/${project.id}-${theme}.png`;
+  const src = `/screenshots/${project.id}-${theme}.webp`;
   const [currentSrc, setCurrentSrc] = useState(src);
   const [failed, setFailed] = useState(false);
 
   // When theme switches, try the new theme-specific screenshot
   useEffect(() => {
     setFailed(false);
-    setCurrentSrc(`/screenshots/${project.id}-${theme}.png`);
+    setCurrentSrc(`/screenshots/${project.id}-${theme}.webp`);
   }, [theme, project.id]);
 
   if (failed) {
@@ -72,7 +72,7 @@ function ProjectImage({
             ))}
           </div>
           <p className="text-white/50 text-xs mt-4 font-mono uppercase tracking-wider">
-            // Add screenshot: {project.id}-{theme}.png
+            // Add screenshot: {project.id}-{theme}.webp
           </p>
         </div>
       </div>

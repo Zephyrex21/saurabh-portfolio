@@ -57,17 +57,48 @@ export default function Hero({ theme }: HeroProps) {
     let animId: number;
     let w = (canvas.width = canvas.offsetWidth);
     let h = (canvas.height = canvas.offsetHeight);
-    const onResize = () => { if (!canvas) return; w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; };
-    window.addEventListener("resize", onResize);
-    const mouse = { x: w / 2, y: h / 2, tx: w / 2, ty: h / 2 };
-    const onMouseMove = (e: MouseEvent) => { const r = canvas.getBoundingClientRect(); mouse.tx = e.clientX - r.left; mouse.ty = e.clientY - r.top; };
-    window.addEventListener("mousemove", onMouseMove);
 
     const isDark = theme === "dark";
     const lineColor = isDark ? "rgba(255,255,255,0.018)" : "rgba(0,0,0,0.04)";
     const blobColor1 = isDark ? "rgba(0, 255, 102, 0.025)" : "rgba(0, 153, 77, 0.04)";
     const blobColor2 = isDark ? "rgba(255,255,255,0.015)" : "rgba(0,0,0,0.02)";
     const glowColor  = isDark ? "rgba(0, 255, 102, 0.018)" : "rgba(0, 153, 77, 0.035)";
+
+    // Offscreen canvas holds the static grid — drawn once, not every frame.
+    // The grid lines were ~70+ stroke() calls per frame at 60fps; caching them
+    // as a bitmap and just drawing that bitmap each frame is dramatically cheaper.
+    const gridCanvas = document.createElement("canvas");
+    const gridCtx = gridCanvas.getContext("2d");
+
+    const renderGrid = () => {
+      if (!gridCtx) return;
+      gridCanvas.width = w;
+      gridCanvas.height = h;
+      gridCtx.clearRect(0, 0, w, h);
+      gridCtx.strokeStyle = lineColor;
+      gridCtx.lineWidth = 1;
+      const step = 40;
+      for (let x = 0; x < w; x += step) { gridCtx.beginPath(); gridCtx.moveTo(x, 0); gridCtx.lineTo(x, h); gridCtx.stroke(); }
+      for (let y = 0; y < h; y += step) { gridCtx.beginPath(); gridCtx.moveTo(0, y); gridCtx.lineTo(w, y); gridCtx.stroke(); }
+    };
+    renderGrid();
+
+    let resizeRaf: number | null = null;
+    const onResize = () => {
+      if (resizeRaf !== null) return;
+      resizeRaf = requestAnimationFrame(() => {
+        if (!canvas) return;
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+        renderGrid();
+        resizeRaf = null;
+      });
+    };
+    window.addEventListener("resize", onResize);
+
+    const mouse = { x: w / 2, y: h / 2, tx: w / 2, ty: h / 2 };
+    const onMouseMove = (e: MouseEvent) => { const r = canvas.getBoundingClientRect(); mouse.tx = e.clientX - r.left; mouse.ty = e.clientY - r.top; };
+    window.addEventListener("mousemove", onMouseMove);
 
     const blobs = [
       { x: w * 0.3, y: h * 0.4, r: Math.min(w, h) * 0.25, c: blobColor1, vx: 0.4, vy: 0.25 },
@@ -77,6 +108,10 @@ export default function Hero({ theme }: HeroProps) {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+
+      // Cached grid bitmap — single drawImage call instead of ~70 stroke() calls
+      ctx.drawImage(gridCanvas, 0, 0);
+
       mouse.x += (mouse.tx - mouse.x) * 0.08;
       mouse.y += (mouse.ty - mouse.y) * 0.08;
 
@@ -95,11 +130,6 @@ export default function Hero({ theme }: HeroProps) {
         ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
       });
 
-      ctx.strokeStyle = lineColor; ctx.lineWidth = 1;
-      const step = 40;
-      for (let x = 0; x < w; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-      for (let y = 0; y < h; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-
       animId = requestAnimationFrame(draw);
     };
     draw();
@@ -113,6 +143,7 @@ export default function Hero({ theme }: HeroProps) {
 
     return () => {
       window.removeEventListener("resize", onResize);
+      if (resizeRaf !== null) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("visibilitychange", onVisibility);
       cancelAnimationFrame(animId);

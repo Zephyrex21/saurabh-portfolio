@@ -6,58 +6,60 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
   const [copied, setCopied] = useState(false);
 
   const plainText = `SAURABH RAJ SHEKHAR
-Full-Stack Developer & CSE (Data Science) Student
-Email: shekharsaurabhraj@gmail.com | GitHub: github.com/Zephyrex21
-New Delhi, India | LeetCode: leetcode.com/u/Zephyrex_21
-
-SUMMARY
-2nd year B.Tech CSE (Data Science) student at NSUT Delhi (2028). Full-stack developer
-building end-to-end web apps, algorithm visualizers, and AI/ML tools with Python and React.
-157+ DSA problems solved across LeetCode (62) and Code360 (95). 12+ deployed projects.
++91 96435 49110 | shekharsaurabhraj@gmail.com
+GitHub: github.com/Zephyrex21 | LeetCode: leetcode.com/u/Zephyrex_21
 
 EDUCATION
-B.Tech CSE (Data Science) — NSUT Delhi | 2024–2028
-Higher Secondary — Kendriya Vidyalaya Gole Market, Delhi | 2023
+B.Tech (CSE – Data Science) — Netaji Subhas University of Technology | 2024–Present
+CGPA: 7.36
 
 PROJECTS
-1. Forge — GitHub Contribution Radar (Full-Stack MERN + GitHub OAuth)
-   React 18 · Vite · Node.js · Express · MongoDB · GitHub OAuth · JWT · TanStack Query · Recharts
-   Full-stack platform that scores GitHub issues (0–100) by skill match and tracks them
-   through a contribution pipeline (Saved → Exploring → In Progress → PR Opened → Merged).
-   Live: github-contribution-radar.vercel.app | GitHub: Zephyrex21/github-contribution-radar
-
-2. Urban Heat Mitigation — Python, FastAPI, XGBoost, SHAP, React, Deck.gl, MapLibre
-   AI full-stack app covering 20 Indian cities with interactive heat maps and scenario builder.
+1. UrbanHeat — Urban Heat Island Analyzer
+   Python, FastAPI, XGBoost, SHAP, GeoPandas, React, Vite, Deck.gl, MapLibre GL, Recharts
+   AI/ML full-stack web app analyzing urban heat islands across 20 Indian cities using
+   Landsat satellite data; single XGBoost model trained with leave-cities-out cross-validation
+   for generalization to unseen cities. SHAP-based driver analysis explaining per-grid heat
+   contributors; interactive Scenario Builder simulates cooling interventions with live
+   before/after split-view map. Submitted to ISRO BAH 2026 hackathon. Deployed on Vercel
+   (frontend) and Render (FastAPI backend); GeoParquet flat files for zero-infrastructure
+   data storage.
    Live: urban-heat-mitigation-mu.vercel.app | GitHub: Zephyrex21/urban-heat-mitigation
 
-3. Cryptex (Full-Stack) — Node.js, Express.js, MongoDB, Supabase
-   Token-based secure file sharing — REST API backend + vanilla JS frontend.
+2. GitHub Radar — GitHub Contribution Analyzer
+   React, Vite, GitHub REST API, Recharts, Tailwind CSS
+   Dashboard that fetches and visualizes any user's GitHub profile data — repositories,
+   commit history, language distribution, and contribution streaks — via the GitHub REST API.
+   Interactive Recharts visualizations for language breakdown and activity graphs; clean
+   Apple-inspired UI built with React and Tailwind CSS.
+   Live: github-contribution-radar.vercel.app | GitHub: Zephyrex21/github-contribution-radar
+
+3. Cryptex — Token-Based File Sharing Platform
+   Node.js, Express.js, MongoDB Atlas, Supabase Storage, HTML, CSS, JavaScript
+   Secure file sharing platform with upload, download, folder organization, and file preview —
+   generating unique share tokens per item so database IDs are never exposed to end users.
+   Public/private visibility toggle; 9 REST API modules; MongoDB for metadata, Supabase
+   Storage for file content. Deployed on Render with production-grade environment
+   configuration and ISC-licensed open source release.
    Live: cryptex-file-sharing.onrender.com | GitHub: Zephyrex21/Cryptex_File_Sharing
 
-4. Automata Lab — React.js, Tailwind CSS, JavaScript
-   Interactive NFA→DFA converter with step-by-step subset construction.
+4. Automata Lab — Interactive Automata Visualizer
+   JavaScript, HTML, CSS (Vanilla — zero dependencies)
+   Web-based simulation tool for visualizing DFA, NFA, and model conversions — making Theory
+   of Automata concepts interactive with step-by-step input processing and state transition
+   diagrams. Supports NFA-to-DFA conversion with live diagram rendering; deployed on Netlify
+   with zero build tooling overhead. Widely used by NSUT CSDS peers for TAFL coursework practice.
    Live: automata-lab.netlify.app | GitHub: Zephyrex21/Automata-Visualizer
 
-5. Red Blackify — React.js, Tailwind CSS
-   Interactive RBT & AVL Tree visualizer with animations and pseudocode.
-   Live: rbt-visualizer.netlify.app
-
 TECHNICAL SKILLS
-Frontend: React.js (18), Vite, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, TanStack Query, Recharts
-Backend: Node.js, Express.js, Python, FastAPI, C++
-Auth: GitHub OAuth, JWT, Passport.js
-Databases: MongoDB (Mongoose), Supabase Storage
-CS Theory: Theory of Automata, DSA, OS, DBMS
-Tools: Git, GitHub, Netlify, Vercel, Postman
+Languages: Python, JavaScript, HTML, CSS, C++
+Frameworks: React.js, Node.js, Express.js, Tailwind CSS, FastAPI, Flask
+ML / Data: XGBoost, SHAP, GeoPandas, NumPy, Pandas, Scikit-learn
+Tools: Git, VS Code, Postman, Jupyter Notebook, Vercel, Netlify, Render
+Soft Skills: Quick Learner, Communication, Team Collaboration, Adaptability
 
-CODING PROFILES
-LeetCode: 62 problems (38E/21M/3H) | leetcode.com/u/Zephyrex_21
-Code360: 95 problems (70E/21M/4H) | Max streak: 41 days
-
-CERTIFICATIONS
-- Designing Blockchain Solutions using Amazon Managed Blockchain, AWS (Nov 2025)
-- Fundamentals of Machine Learning and Artificial Intelligence, AWS (Nov 2025)
-- Soft Skills and Personality Development, NPTEL Swayam (Aug–Nov 2025)`;
+OTHER INFORMATION
+Languages Known: Hindi, English
+LeetCode Profile: leetcode.com/u/Zephyrex_21`;
 
   const handleCopy = () => {
     try {
@@ -70,11 +72,30 @@ CERTIFICATIONS
   };
 
   const projects = [
-    { name: "Forge — GitHub Contribution Radar", stack: "React 18 · Vite · Node.js · Express · MongoDB · GitHub OAuth · JWT · TanStack Query · Recharts", desc: "Full-stack MERN platform that scores GitHub issues (0–100) by skill match and tracks them through a contribution pipeline.", url: "github-contribution-radar.vercel.app" },
-    { name: "Urban Heat Mitigation", stack: "Python · FastAPI · XGBoost · SHAP · React · Deck.gl", desc: "AI full-stack app — heat island analysis + scenario builder for 20 Indian cities.", url: "urban-heat-mitigation-mu.vercel.app" },
-    { name: "Cryptex", stack: "Node.js · Express · MongoDB · Supabase", desc: "Secure token-based file sharing REST API + frontend. No accounts required.", url: "cryptex-file-sharing.onrender.com" },
-    { name: "Automata Lab", stack: "React.js · Tailwind CSS · JavaScript", desc: "Interactive NFA→DFA visual converter with subset construction & DFA minimization.", url: "automata-lab.netlify.app" },
-    { name: "Red Blackify", stack: "React.js · Tailwind CSS", desc: "Interactive Red-Black Tree & AVL Tree visualizer with animations and pseudocode.", url: "rbt-visualizer.netlify.app" },
+    {
+      name: "UrbanHeat — Urban Heat Island Analyzer",
+      stack: "Python · FastAPI · XGBoost · SHAP · GeoPandas · React · Vite · Deck.gl · MapLibre GL · Recharts",
+      desc: "AI/ML full-stack app analyzing urban heat islands across 20 Indian cities using Landsat data. Single XGBoost model with leave-cities-out cross-validation. Submitted to ISRO BAH 2026 hackathon.",
+      url: "urban-heat-mitigation-mu.vercel.app",
+    },
+    {
+      name: "GitHub Radar — GitHub Contribution Analyzer",
+      stack: "React · Vite · GitHub REST API · Recharts · Tailwind CSS",
+      desc: "Dashboard that fetches and visualizes any GitHub user's profile data — repos, commit history, language distribution, and contribution streaks. Apple-inspired UI.",
+      url: "github-contribution-radar.vercel.app",
+    },
+    {
+      name: "Cryptex — Token-Based File Sharing Platform",
+      stack: "Node.js · Express.js · MongoDB Atlas · Supabase Storage",
+      desc: "Secure file sharing with upload, download, folders & preview. 9 REST API modules. ISC-licensed open source release on Render.",
+      url: "cryptex-file-sharing.onrender.com",
+    },
+    {
+      name: "Automata Lab — Interactive Automata Visualizer",
+      stack: "JavaScript · HTML · CSS (Vanilla, zero dependencies)",
+      desc: "Web-based DFA/NFA simulation tool with step-by-step input processing. Widely used by NSUT CSDS peers for TAFL coursework.",
+      url: "automata-lab.netlify.app",
+    },
   ];
 
   return (
@@ -122,37 +143,24 @@ CERTIFICATIONS
               <p className="text-primary font-mono text-xs tracking-widest uppercase mt-1">Full-Stack Developer · CSE (Data Science) Student · AI/ML Enthusiast</p>
             </div>
             <div className="text-xs t-txt60 space-y-1 md:text-right font-medium font-mono uppercase tracking-wide">
+              <p>+91 96435 49110</p>
               <p>shekharsaurabhraj@gmail.com</p>
               <p>github.com/Zephyrex21</p>
-              <p>New Delhi, India</p>
             </div>
-          </div>
-
-          {/* About */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// ABOUT</h4>
-            <p className="text-sm t-txt60 leading-relaxed font-light">
-              2nd year B.Tech CSE (Data Science) at NSUT Delhi (Class of 2028). Full-stack developer building end-to-end apps — from Node/Express REST APIs and Python/FastAPI ML backends to interactive React frontends. 157+ DSA problems solved, 22+ GitHub repositories, 12+ deployed projects.
-            </p>
           </div>
 
           {/* Education */}
           <div className="space-y-4">
             <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// EDUCATION</h4>
-            {[
-              { deg: "B.Tech CSE (Data Science) — NSUT Delhi", sub: "Netaji Subhas University of Technology, New Delhi", year: "2024–2028" },
-              { deg: "Higher Secondary — Kendriya Vidyalaya Gole Market", sub: "Mathematics & Science stream, New Delhi", year: "2023" },
-            ].map((e) => (
-              <div key={e.deg} className="flex justify-between items-start flex-wrap gap-2">
-                <div>
-                  <div className="font-bold t-txt text-sm flex items-center gap-1.5 font-display uppercase tracking-tight">
-                    <GraduationCap className="w-4 h-4 text-primary shrink-0" />{e.deg}
-                  </div>
-                  <p className="text-xs t-txt50 ml-6 mt-1 font-light">{e.sub}</p>
+            <div className="flex justify-between items-start flex-wrap gap-2">
+              <div>
+                <div className="font-bold t-txt text-sm flex items-center gap-1.5 font-display uppercase tracking-tight">
+                  <GraduationCap className="w-4 h-4 text-primary shrink-0" />B.Tech CSE (Data Science) — NSUT Delhi
                 </div>
-                <span className="text-[10px] font-mono border border-primary/20 bg-primary/5 text-primary px-2 py-0.5 rounded uppercase">{e.year}</span>
+                <p className="text-xs t-txt50 ml-6 mt-1 font-light">Netaji Subhas University of Technology, New Delhi · CGPA: 7.36</p>
               </div>
-            ))}
+              <span className="text-[10px] font-mono border border-primary/20 bg-primary/5 text-primary px-2 py-0.5 rounded uppercase">2024–Present</span>
+            </div>
           </div>
 
           {/* Projects */}
@@ -180,11 +188,11 @@ CERTIFICATIONS
             <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// TECHNICAL_SKILLS</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed t-txt60">
               {[
-                { label: "FRONTEND", val: "React.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS" },
-                { label: "BACKEND / LANGUAGES", val: "Python, C++, Node.js, Express.js, FastAPI" },
-                { label: "DATABASES", val: "MongoDB, Supabase Storage" },
-                { label: "CS THEORY", val: "Theory of Automata, DSA, OS, DBMS" },
-                { label: "TOOLS", val: "Git, GitHub, Netlify, Vercel, Postman" },
+                { label: "LANGUAGES", val: "Python, JavaScript, HTML, CSS, C++" },
+                { label: "FRAMEWORKS", val: "React.js, Node.js, Express.js, Tailwind CSS, FastAPI, Flask" },
+                { label: "ML / DATA", val: "XGBoost, SHAP, GeoPandas, NumPy, Pandas, Scikit-learn" },
+                { label: "TOOLS", val: "Git, VS Code, Postman, Jupyter Notebook, Vercel, Netlify, Render" },
+                { label: "SOFT SKILLS", val: "Quick Learner, Communication, Team Collaboration, Adaptability" },
               ].map((sk) => (
                 <div key={sk.label}>
                   <span className="font-mono t-txt font-bold block mb-1 uppercase tracking-wider text-[10px]">// {sk.label}</span>
@@ -194,23 +202,13 @@ CERTIFICATIONS
             </div>
           </div>
 
-          {/* DSA */}
+          {/* Other Information */}
           <div className="space-y-3">
-            <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// CODING_PROFILES</h4>
+            <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// OTHER_INFORMATION</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs t-txt60">
-              <div><span className="font-bold t-txt block mb-1 font-mono uppercase">LeetCode</span>62 problems · 38E / 21M / 3H · Max streak: 29 days</div>
-              <div><span className="font-bold t-txt block mb-1 font-mono uppercase">Code360 (Coding Ninjas)</span>95 problems · 70E / 21M / 4H · Max streak: 41 days · 602 submissions</div>
+              <div><span className="font-bold t-txt block mb-1 font-mono uppercase">Languages Known</span>Hindi, English</div>
+              <div><span className="font-bold t-txt block mb-1 font-mono uppercase">LeetCode</span>leetcode.com/u/Zephyrex_21</div>
             </div>
-          </div>
-
-          {/* Certifications */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-widest border-l-2 border-primary pl-2">// CERTIFICATIONS</h4>
-            <ul className="text-xs t-txt60 space-y-2 font-light">
-              <li>→ Designing Blockchain Solutions using Amazon Managed Blockchain, AWS (Nov 2025)</li>
-              <li>→ Fundamentals of Machine Learning and Artificial Intelligence, AWS (Nov 2025)</li>
-              <li>→ Soft Skills and Personality Development, NPTEL Swayam (Aug–Nov 2025)</li>
-            </ul>
           </div>
         </div>
 
